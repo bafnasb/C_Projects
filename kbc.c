@@ -1,15 +1,77 @@
-void main()
+#ifndef KBC_C_INCLUDED
+#define KBC_C_INCLUDED
+#include<stdio.h>
+void clrscr(void)
+{
+    system("clear");
+}
+#include <termios.h>
+#include <stdio.h>
+
+static struct termios old, new;
+
+/* Initialize new terminal i/o settings */
+void initTermios(int echo)
+{
+  tcgetattr(0, &old); //grab old terminal i/o settings
+  new = old; //make new settings same as old settings
+  new.c_lflag &= ~ICANON; //disable buffered i/o
+  new.c_lflag &= echo ? ECHO : ~ECHO; //set echo mode
+  tcsetattr(0, TCSANOW, &new); //apply terminal io settings
+}
+
+/* Restore old terminal i/o settings */
+void resetTermios(void)
+{
+  tcsetattr(0, TCSANOW, &old);
+}
+
+/* Read 1 character - echo defines echo mode */
+char getch_(int echo)
+{
+  char ch;
+  initTermios(echo);
+  ch = getchar();
+  resetTermios();
+  return ch;
+}
+
+/*
+Read 1 character without echo
+getch() function definition.
+*/
+char getch(void)
+{
+  return getch_(0);
+}
+
+/*
+Read 1 character with echo
+getche() function definition.
+*/
+char getche(void)
+{
+  return getch_(1);
+}
+
+main()
 {
 int ch,a,b,c,d,e,f,g,h,i,j,k;
 char z;
 clrscr();
-printf("\n\t\t\t\tWelcome To\n\n\t\t\t  KAUN BANEGA CROREPATI\n");
+printf("\a\n\n\n\n\n\n\t\t\t\tWelcome To\n\n\t\t\t  KAUN BANEGA CROREPATI\n");
+printf("\n\n\n\t\t   Press any key to to to instruction");
+getch();
+clrscr();
 printf("\nInstructions :-\n");
 printf("\t1.The Game Consists of 10 questions.");
 printf("\n\t2.Each Question Will have four Options.");
 printf("\n\t3.From all the options only one will be correct.");
 printf("\n\t4.With each Correct answer the player will move to the next level.");
 printf("\n\t5.Player will continue to play until he/she chooses the wrong answer.");
+printf("\n\t\t\tEnter any key to proceed");
+getch();
+clrscr();
 printf("\n\nPrize Description :- \n\n");
 printf("\nFirst Correct Answer = Rs.1000/-");
 printf("\nSecond Correct Answer = Rs.5000/-");
@@ -36,23 +98,29 @@ case 1:
 	printf("\t\t\n1.Delhi\n2.Mumbai\n3.Bangalore\n4.Chennai\n");
 	scanf("%d",&a);
 		if(a==1)
-		       {	printf("\nCorrect Answer");
-				printf("\nYou Won Rs.1000/-");
+		       {	printf("\n\tCorrect Answer");
+				printf("\n\tYou Won Rs.1000/-");
+				printf("\n\n\n\tPress any Key to Continue");
+				getch();
 		       }
 		else
 		       {
 			printf("\nYou Lost");
 			printf("\nPrize Money=Rs.0/-");
 			break;
+
 		       }
+
 case 2:
 	clrscr();
 	printf("\n\n\t\t\nWhat is the National Sport of INDIA?");
 	printf("\t\t\n1.Chess\n2.Cricket\n3.Hockey\n4.Ludo\n");
 	scanf("%d",&b);
 		if(b==3)
-		       {	printf("\nCorrect Answer");
-				printf("\nYou Won Rs.5000/-");
+		       {	printf("\n\tCorrect Answer");
+				printf("\n\tYou Won Rs.5000/-");
+				printf("\n\n\n\tPress any Key to Continue");
+				getch();
 		       }
 		else
 		       {
@@ -66,8 +134,10 @@ case 3:
 	printf("\t\t\n1.2016\n2.2015\n3.2014\n4.2017\n");
 	scanf("%d",&c);
 		if(c==1)
-		       {	printf("\nCorrect Answer");
-				printf("\nYou Won Rs.10000/-");
+		       {	printf("\n\tCorrect Answer");
+				printf("\n\tYou Won Rs.10000/-");
+				printf("\n\n\n\tPress any Key to Continue");
+				getch();
 		       }
 		else
 		       {
@@ -81,8 +151,10 @@ case 4:
 	printf("\t\t\n1.8564\n2.854261\n3.56274\n4.20152\n");
 	scanf("%d",&d);
 		if(d==2)
-		       {	printf("\nCorrect Answer");
-				printf("\nYou Won Rs.20000/-");
+		       {	printf("\n\tCorrect Answer");
+				printf("\n\tYou Won Rs.20000/-");
+				printf("\n\n\n\tPress any Key to Continue");
+				getch();
 		       }
 		else
 		       {
@@ -96,8 +168,10 @@ case 5:
 	printf("\t\t\n1.Dr.APJ. Abdul Kalam\n2.Mr.Narendra Modi\n3.Mr.Pranav Mikherjee\n4.Albert Einstein\n");
 	scanf("%d",&e);
 		if(e==1)
-		       {	printf("\nCorrect Answer");
-				printf("\nYou Won Rs.40000/-");
+		       {	printf("\n\tCorrect Answer");
+				printf("\n\tYou Won Rs.40000/-");
+				printf("\n\n\n\tPress any Key to Continue");
+				getch();
 		       }
 		else
 		       {
@@ -111,8 +185,10 @@ case 6:
 	printf("\t\t\n1.2012\n2.1983\n3.2003\n4.1996\n");
 	scanf("%d",&f);
 		if(f==2)
-		       {	printf("\nCorrect Answer");
-				printf("\nYou Won Rs.100000/-");
+		       {	printf("\n\tCorrect Answer");
+				printf("\n\tYou Won Rs.100000/-");
+				printf("\n\n\n\tPress any Key to Continue");
+				getch();
 		       }
 		else
 		       {
@@ -126,8 +202,10 @@ case 7:
 	printf("\t\t\n1.Wriddhiman Saha\n2.Anil Kumble\n3.Amit Mishra\n4.Sachin Ramesh Tendulkar\n");
 	scanf("%d",&g);
 		if(g==4)
-		       {	printf("\nCorrect Answer");
-				printf("\nYou Won Rs.500000/-");
+		       {	printf("\n\tCorrect Answer");
+				printf("\n\tYou Won Rs.500000/-");
+				printf("\n\n\n\tPress any Key to Continue");
+				getch();
 		       }
 		else
 		       {
@@ -141,8 +219,10 @@ case 8:
 	printf("\t\t\n1.2016\n2.2004\n3.2008\n4.1996\n");
 	scanf("%d",&h);
 		if(h==3)
-		       {	printf("\nCorrect Answer");
-				printf("\nYou Won Rs.1000000/-");
+		       {	printf("\n\tCorrect Answer");
+				printf("\n\tYou Won Rs.1000000/-");
+				printf("\n\n\n\tPress any Key to Continue");
+				getch();
 		       }
 		else
 		       {
@@ -156,8 +236,10 @@ case 9:
 	printf("\t\t\n1.23rd Dec\n2.30th June\n3.12th Mar\n4.26th Jan\n");
 	scanf("%d",&i);
 		if(i==4)
-		       {	printf("\nCorrect Answer");
-				printf("\nYou Won Rs.5000000/-");
+		       {	printf("\n\tCorrect Answer");
+				printf("\n\tYou Won Rs.5000000/-");
+				printf("\n\n\n\tPress any Key to Continue");
+				getch();
 		       }
 		else
 		       {
@@ -171,8 +253,10 @@ case 10:
 	printf("\t\t\n1.Amit Mishra\n2.Sachin Tendulkar\n3.Virendra Sehwag\n4.Sourav Ganguly\n");
 	scanf("%d",&j);
 		if(j==4)
-		       {	printf("\nCorrect Answer");
-				printf("\nYou Won Rs.10000000/-");
+		       {	printf("\n\tCorrect Answer");
+				printf("\n\tYou Won Rs.10000000/-");
+				printf("\n\n\n\tPress any Key to Continue");
+				getch();
 		       }
 		else
 		       {
@@ -189,3 +273,6 @@ default:
 	printf("\nThankYou,Do play Next Time.");
 getch();
 }
+
+
+#endif // KBC_C_INCLUDED
