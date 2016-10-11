@@ -1,3 +1,4 @@
+//Conversion Of Date To Day
 void main()
 {
 int year,month,date,day_of_the_week,julian_day,i,fours,hundreds,four_hundreds;
